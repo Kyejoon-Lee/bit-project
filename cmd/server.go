@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"bit-project/gateway/config"
+	"bit-project/gateway/db"
 	"bit-project/gateway/internal/app"
 	"bit-project/gateway/internal/app/module"
 
@@ -69,7 +70,10 @@ func runServer() {
 	ctx, stop := module.ServerContext()
 	defer stop()
 	cfg := config.GetConfig()
-	log.Info(cfg)
+	log.Infof("Server config : %#v", *cfg)
+
+	db.Open(cfg)
+	db.AutoMigrate()
 	server := app.RestServer{}
 	server.StartGatewayServer()
 

@@ -15,7 +15,9 @@ import (
 )
 
 type testModel struct {
-	IdToken string `json:"id_token"`
+	AccessToken  string `json:"access_token"`
+	IdToken      string `json:"id_token"`
+	RefreshToken string `json:"refresh_token"`
 }
 
 func Login(c *gin.Context) {
@@ -29,7 +31,6 @@ func Login(c *gin.Context) {
 	query.Add("client_id", cfg.ClientID)
 	query.Add("client_secret", cfg.ClientSecret)
 	base, err := url.Parse("https://kauth.kakao.com/oauth/token")
-	log.Info(base)
 	if err != nil {
 		log.Println(err)
 	}
@@ -46,7 +47,7 @@ func Login(c *gin.Context) {
 	}
 	json.Unmarshal(sendByte, &mod)
 	parsed, err := jwt.Parse(mod.IdToken, func(token *jwt.Token) (interface{}, error) {
-		return nil, nil
+		return []byte(cfg.ClientSecret), nil
 	})
 	email := parsed.Claims.(jwt.MapClaims)["email"]
 	//clientID := parsed.Claims.(jwt.MapClaims)["clentid"]
