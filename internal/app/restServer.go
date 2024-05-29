@@ -8,11 +8,9 @@ import (
 
 	"bit-project/gateway/api"
 	"bit-project/gateway/config"
-	"bit-project/gateway/internal/pkg/auth"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
-	"github.com/robfig/cron/v3"
 	log "github.com/sirupsen/logrus"
 )
 
@@ -55,12 +53,14 @@ func (s *RestServer) StartGatewayServer() {
 
 	log.Infof("start rest server on %s port", cfg.GatewayPort)
 
-	c := cron.New()
-	_, err := c.AddFunc("@daily", auth.GetKakaoJWK)
-	if err != nil {
-		log.Fatalf("Error adding cron job: %s", err)
-	}
-	c.Start()
+	//auth.GetKakaoJWK()
+	//
+	//c := cron.New()
+	//_, err := c.AddFunc("@daily", auth.GetKakaoJWK)
+	//if err != nil {
+	//	log.Fatalf("Error adding cron job: %s", err)
+	//}
+	//c.Start()
 }
 
 func (s *RestServer) ShutdownWebServer(ctx context.Context) error {

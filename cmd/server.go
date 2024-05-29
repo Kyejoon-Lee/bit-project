@@ -35,7 +35,6 @@ to quickly create a Cobra application.`,
 }
 
 func init() {
-	config.InitConfig(serverCmd.PersistentFlags())
 	err := viper.BindPFlags(serverCmd.PersistentFlags())
 	if err != nil {
 		panic(fmt.Sprintf("viper - bind flags fail - %v", err))
