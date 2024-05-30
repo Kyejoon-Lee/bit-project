@@ -9,7 +9,8 @@ import (
 	"time"
 
 	"bit-project/gateway/config"
-	"bit-project/gateway/db"
+	"bit-project/gateway/db/postgresql"
+	"bit-project/gateway/db/redis"
 	"bit-project/gateway/internal/app"
 	"bit-project/gateway/internal/app/module"
 
@@ -71,8 +72,11 @@ func runServer() {
 	cfg := config.GetConfig()
 	log.Infof("Server config : %#v", *cfg)
 
-	db.Open(cfg)
-	db.AutoMigrate()
+	postgresql.Open(cfg)
+	postgresql.AutoMigrate()
+
+	redis.Open(cfg)
+
 	server := app.RestServer{}
 	server.StartGatewayServer()
 

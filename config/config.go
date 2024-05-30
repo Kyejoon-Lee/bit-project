@@ -17,6 +17,11 @@ type Config struct {
 	DBPassword string `env:"DB_PASSWORD" mapstructure:"DB_PASSWORD"`
 	DBName     string `env:"DB_NAME" mapstructure:"DB_NAME"`
 
+	RedisHost     string `env:"REDIS_HOST" mapstructure:"REDIS_HOST"`
+	RedisPort     string `env:"REDIS_PORT" mapstructure:"REDIS_PORT"`
+	RedisPassword string `env:"REDIS_PASSWORD" mapstructure:"REDIS_PASSWORD"`
+	RedisDB       int    `env:"REDIS_DB" mapstructure:"REDIS_DB"`
+
 	TimeZone string `env:"TIMEZONE"`
 
 	KakaoJWKs []Key `json:"keys"`
@@ -38,8 +43,11 @@ var config = &Config{
 	ServerPort:  "9090",
 
 	DBAdapter: "postgres",
-	DBHost:    "192.168.64.1",
+	DBHost:    "192.168.0.64",
 	DBPort:    "5432",
+
+	RedisHost: "192.168.0.64",
+	RedisPort: "6379",
 
 	TimeZone: "Asia/Seoul",
 
