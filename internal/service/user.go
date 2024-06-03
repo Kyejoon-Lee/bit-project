@@ -1,8 +1,12 @@
 package service
 
 import (
+	"context"
+
 	"bit-project/gateway/internal/domain"
 	"bit-project/gateway/internal/repository"
+
+	"github.com/golang-jwt/jwt/v4"
 )
 
 type userService struct {
@@ -20,6 +24,7 @@ func NewUserService(
 	}
 }
 
-func (s *userService) Login() {
+func (s *userService) Login(ctx context.Context, claims jwt.Claims) (string, error) {
+	return "", nil
 
 }

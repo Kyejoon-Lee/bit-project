@@ -6,8 +6,9 @@ import (
 	"net/http"
 	"time"
 
-	"bit-project/gateway/api"
 	"bit-project/gateway/config"
+	"bit-project/gateway/internal/app/module"
+	"bit-project/gateway/internal/controllers"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
@@ -24,6 +25,10 @@ var (
 
 func (s *RestServer) StartGatewayServer() {
 	//gin.SetMode(gin.ReleaseMode)
+
+	userService := module.UserService()
+	userHandler := controllers.NewUserHandler(userService)
+
 	r := gin.New()
 
 	r.Use(gin.Recovery())
@@ -35,7 +40,7 @@ func (s *RestServer) StartGatewayServer() {
 		MaxAge:           1,
 	}))
 
-	r.GET("/login", api.Login)
+	r.GET("/login", userHandler.Login)
 
 	s.server = &http.Server{
 		Addr:              fmt.Sprintf(":%v", cfg.GatewayPort),
